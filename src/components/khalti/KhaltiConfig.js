@@ -8,9 +8,9 @@ let config = {
     "productName": "test app",
     "productUrl": "https://127.0.0.1:5173",
     "eventHandler": {
-        onSuccess(payload) {
+        async onSuccess(payload) {
             // hit merchant api for initiating verfication
-            console.log(payload);
+            // console.log(payload);
 
             let data = {
                 token: payload.token,
@@ -25,7 +25,7 @@ let config = {
                 }
             }
 
-            fetch("https://khalti.com/api/v2/payment/verify/", {
+            const response = await fetch("https://khalti.com/api/v2/payment/verify/", {
                 method: 'POST',
                 mode: 'no-cors',
                 // caches: 'no-cache',
@@ -34,12 +34,11 @@ let config = {
                 body: JSON.stringify(data),
                 headers: config.headers
             })
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            if (response.status === 0) {
+                console.log('success');
+            } else {
+                console.log('failed');
+            }
         },
 
         // onError handler is optional
