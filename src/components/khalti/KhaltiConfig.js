@@ -35,6 +35,7 @@ let config = {
                 headers: config.headers
             })
             if (response.status === 0) {
+                alert("Payment Successful")
                 console.log('success');
             } else {
                 console.log('failed');
